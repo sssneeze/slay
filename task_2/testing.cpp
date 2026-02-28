@@ -2,6 +2,7 @@
 #include <vector>
 #include <tuple>
 #include <chrono>
+#include <cstdlib>
 
 
 class PlotMatrix {
