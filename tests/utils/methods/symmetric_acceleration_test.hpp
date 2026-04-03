@@ -3,12 +3,12 @@
 #include <iomanip>
 #include <vector>
 #include <cmath>
-#include "iterative_result.hpp"
+#include "structures/iterative_result.hpp"
 #include "matrix/plot_matrix.hpp"
 #include "methods/jacobi.hpp"
 #include "methods/gauss_seidel.hpp"
 #include "methods/symmetric_gauss_seidel.hpp"
-#include "methods/chebyshev_acceleration.hpp"
+#include "symmetric_chebyshev_acceleration.hpp"
 
 PlotMatrix create_poisson_matrix(size_t n) {
     PlotMatrix A(n, n);

@@ -4,6 +4,8 @@
 #include <random>
 #include <utility>
 #include <numbers>
+#define _USE_MATH_DEFINES
+#include <cmath>
 
 namespace Methods {
 
@@ -151,7 +153,7 @@ IterativeResult chebyshev_acceleration(
         
         for (size_t k = 0; k < steps_in_cycle; ++k) {
             size_t idx = permutation[k];
-            double t_k = std::cos(std::numbers::pi * (2.0 * idx + 1.0) / (2.0 * steps_in_cycle));
+            double t_k = std::cos(M_PI * (2.0 * idx + 1.0) / (2.0 * steps_in_cycle));
             double lambda_k = center + half_width * t_k;
             taus[k] = 1.0 / lambda_k;
         }
