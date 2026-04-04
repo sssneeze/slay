@@ -3,7 +3,7 @@
 #include <iomanip>
 #include <vector>
 #include <cmath>
-#include "structures/iterative_result.hpp"
+#include "../methods/iterative_result.hpp"
 #include "matrix/plot_matrix.hpp"
 #include "methods/jacobi.hpp"
 #include "methods/gauss_seidel.hpp"
@@ -35,7 +35,7 @@ int run_main() {
     const double EPS = 1e-6;
     const size_t MAX_ITER = 10000;
     
-    std::cout << "=== Сравнение итерационных методов ===" << std::endl;
+    std::cout << "Сравнение итерационных методов" << std::endl;
     std::cout << "Размер матрицы: " << N << "x" << N << std::endl;
     std::cout << "Точность: " << EPS << std::endl;
     std::cout << std::endl;
@@ -84,11 +84,11 @@ int run_main() {
                   << std::setw(15) << res.iterations
                   << std::setw(15) << std::fixed << std::setprecision(2) << res.time_ms
                   << std::setw(15) << std::scientific << std::setprecision(2) << res.residual
-                  << (res.converged ? "✓" : "✗") << std::endl;
+                  << (res.converged ? ":)" : ":()") << std::endl;
     }
     
     std::cout << std::endl;
-    std::cout << "=== Ускорение относительно Якоби ===" << std::endl;
+    std::cout << "Ускорение относительно Якоби" << std::endl;
     double base_iter = results[0].iterations;
     double base_time = results[0].time_ms;
     

@@ -1,7 +1,8 @@
 #pragma once
-#include "matrix/plot_matrix.hpp"
-#include "methods/iterative_result.hpp"
+#include "../methods/iterative_result.hpp"
+#include "../matrix/plot_matrix.hpp"
 #include <vector>
+#include <chrono>
 
 namespace Methods {
     IterativeResult jacobi(
@@ -9,6 +10,6 @@ namespace Methods {
         const std::vector<double>& b,
         std::vector<double> x,
         double eps,
-        size_t max_iter = 10000
+        size_t max_iter
     );
 }

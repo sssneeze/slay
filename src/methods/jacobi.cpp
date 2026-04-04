@@ -1,5 +1,5 @@
-#include "methods/jacobi.hpp"
-#include "vector/operations_vector.hpp"
+#include "jacobi.hpp"
+#include "operations_vector.hpp"
 #include <chrono>
 
 namespace Methods {
@@ -18,7 +18,7 @@ namespace Methods {
         for (size_t k = 0; k < max_iter; ++k) {
             for (size_t i = 0; i < n; ++i) {
                 double sum = 0.0;
-                for (size_t j = 0; j < n; ++j) {
+                for (size_t j = 0; j < n; ++j) { 
                     if (i != j) {
                         sum += A.get(i, j) * x[j];
                     }
