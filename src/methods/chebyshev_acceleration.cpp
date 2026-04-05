@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include "methods/chebyshev_acceleration.hpp"
 #include <chrono>
 #include <random>

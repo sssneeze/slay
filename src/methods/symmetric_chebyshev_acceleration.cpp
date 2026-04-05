@@ -1,5 +1,6 @@
-#include "symmetric_chebyshev_acceleration.hpp"
-#include "operations_vector.hpp"
+#define _USE_MATH_DEFINES
+#include "methods/symmetric_chebyshev_acceleration.hpp"
+#include "vector/operations_vector.hpp"
 #include <chrono>
 #include <random>
 #include <utility>
@@ -310,7 +311,7 @@ std::vector<double> symmetric_gauss_seidel_step(
         x_half[i] = (b[i] - sum) / A.get(i, i);
     }
     
-    for (int i = n - 1; i >= 0; --i) {
+    for (size_t i = n - 1; i >= 0; --i) {
         double sum = 0.0;
         for (size_t j = 0; j < n; ++j) {
             if (i != j) {

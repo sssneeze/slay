@@ -1,5 +1,5 @@
 #pragma once
-#include "iterative_result.hpp"
+#include "methods/iterative_result.hpp"
 #include "../matrix/plot_matrix.hpp"
 #include <vector>
 #include <chrono>

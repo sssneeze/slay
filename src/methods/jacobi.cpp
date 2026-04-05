@@ -1,5 +1,5 @@
-#include "jacobi.hpp"
-#include "operations_vector.hpp"
+#include "methods/jacobi.hpp"
+#include "vector/operations_vector.hpp"
 #include <chrono>
 
 namespace Methods {

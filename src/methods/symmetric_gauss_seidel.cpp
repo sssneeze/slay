@@ -1,5 +1,5 @@
-#include "symmetric_gauss_seidel.hpp"
-#include "operations_vector.hpp"
+#include "methods/symmetric_gauss_seidel.hpp"
+#include "vector/operations_vector.hpp"
 
 namespace Methods {
     IterativeResult symmetric_gauss_seidel(
