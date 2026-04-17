@@ -1,6 +1,4 @@
-// tests/symmetric_acceleration_test.hpp
 #pragma once
-
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -13,6 +11,10 @@
 #include "methods/gauss_seidel.hpp"
 #include "methods/symmetric_gauss_seidel.hpp"
 #include "methods/symmetric_chebyshev_acceleration.hpp"
+#include "methods/sor.hpp"
+#include "methods/steepest_descent.hpp"
+#include "methods/conjugate_gradient.hpp"
+#include "matrix/poisson_generator.hpp"
 
 inline PlotMatrix create_poisson_matrix(size_t n) {
     PlotMatrix A(n, n);
@@ -32,7 +34,7 @@ inline std::vector<double> create_initial_guess(size_t n) {
     return std::vector<double>(n, 0.0);
 }
 
-// Структура для хранения данных об итерациях
+
 struct IterationData {
     size_t iteration;
     std::string method;
@@ -40,7 +42,7 @@ struct IterationData {
     double time_ms;
 };
 
-// Функция для сохранения данных в CSV
+
 inline void save_convergence_data(const std::vector<IterationData>& data, const std::string& filename) {
     std::ofstream file(filename);
     file << "iteration,method,residual,time_ms\n";
@@ -68,13 +70,13 @@ inline int run_symmetric_acceleration_test() {
     std::vector<Methods::IterativeResult> results;
     std::vector<IterationData> convergence_data;
     
-    // Запуск метода Якоби с сохранением данных по итерациям
+    
     {
         auto res = Methods::jacobi(A, b, x0, EPS, MAX_ITER);
         res.method_name = "Jacobi";
         results.push_back(res);
         
-        // Для простоты сохраняем конечную точку
+        
         convergence_data.push_back({res.iterations, "Jacobi", res.residual, res.time_ms});
     }
     
@@ -129,11 +131,11 @@ inline int run_symmetric_acceleration_test() {
         convergence_data.push_back({res.iterations, "Chebyshev + SGS", res.residual, res.time_ms});
     }
     
-    // Сохранение данных в CSV
+    
     save_convergence_data(convergence_data, "symmetric_acceleration_results.csv");
     std::cout << "Данные сохранены в symmetric_acceleration_results.csv" << std::endl << std::endl;
     
-    // Вывод результатов в консоль
+    
     std::cout << std::left << std::setw(25) << "Метод" 
               << std::setw(15) << "Итерации" 
               << std::setw(15) << "Время (мс)" 
@@ -161,6 +163,89 @@ inline int run_symmetric_acceleration_test() {
                   << speedup_iter << "x (итерации), "
                   << speedup_time << "x (время)" << std::endl;
     }
+
+    return 0;
+}
+//======================================================================================
+
+    inline int run_seminar7_test() {
+    const size_t NX = 20, NY = 20;
+    const double EPS = 1e-6;
+    const size_t MAX_ITER = 5000;
+    const double H = 1.0;
+    
+    std::cout << "Сравнение методов на матрице Пуассона (" << NX << "×" << NY << ")" << std::endl;
+    std::cout << "Точность: " << EPS << ", макс. итераций: " << MAX_ITER << std::endl << std::endl;
+    
+    PlotMatrix A = Poisson::generate(NX, NY, H);
+    std::vector<double> b = Poisson::generate_rhs(NX, NY, H);
+    std::vector<double> x0(NX * NY, 0.0);
+    
+    std::vector<Methods::IterativeResult> results;
+    
+    {
+        auto res = Methods::gauss_seidel(A, b, x0, EPS, MAX_ITER);
+        res.method_name = "Gauss-Seidel";
+        results.push_back(res);
+    }
+    
+    {
+        auto res = Methods::sor(A, b, x0, EPS, MAX_ITER, 1.5);
+        res.method_name = "SOR (omega=1.5)";
+        results.push_back(res);
+    }
+    
+    {
+        double rho = Methods::estimate_spectral_radius(A, b, x0, 20);
+        auto res = Methods::chebyshev_acceleration_symmetric(
+            A, b, x0, EPS, rho, MAX_ITER, Methods::gauss_seidel_step
+        );
+        res.method_name = "Chebyshev + GS";
+        results.push_back(res);
+    }
+    
+    {
+        auto res = Methods::steepest_descent(A, b, x0, EPS, MAX_ITER);
+        res.method_name = "Steepest Descent";
+        results.push_back(res);
+    }
+    
+    {
+        auto res = Methods::conjugate_gradient(A, b, x0, EPS, MAX_ITER);
+        res.method_name = "Conjugate Gradient";
+        results.push_back(res);
+    }
+    
+    std::cout << std::left << std::setw(25) << "Метод" 
+              << std::setw(12) << "Итерации" 
+              << std::setw(15) << "Время (мс)" 
+              << std::setw(18) << "Невязка" 
+              << "Сходимость" << std::endl;
+    std::cout << std::string(90, '-') << std::endl;
+    
+    for (const auto& res : results) {
+        std::cout << std::left << std::setw(25) << res.method_name
+                  << std::setw(12) << res.iterations
+                  << std::setw(15) << std::fixed << std::setprecision(2) << res.time_ms
+                  << std::setw(18) << std::scientific << std::setprecision(2) << res.residual
+                  << (res.converged ? ":)" : ":(") << std::endl;
+    }
+    
+    std::cout << "\nУскорение относительно Гаусс-Зейделя:" << std::endl;
+    double base_iter = results[0].iterations;
+    double base_time = results[0].time_ms;
+    
+    for (size_t i = 1; i < results.size(); ++i) {
+        if (results[i].iterations > 0 && results[i].time_ms > 0) {
+            double speedup_iter = static_cast<double>(base_iter) / results[i].iterations;
+            double speedup_time = base_time / results[i].time_ms;
+            std::cout << "  " << results[i].method_name << ": "
+                      << std::fixed << std::setprecision(2)
+                      << speedup_iter << "x итер., "
+                      << speedup_time << "x время" << std::endl;
+        }
+    }
     
     return 0;
+
 }

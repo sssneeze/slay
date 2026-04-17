@@ -1,0 +1,1 @@
+ libjacobi.a libgauss_seidel.a libsymmetric_gauss_seidel.a libsymmetric_chebyshev_acceleration.a libchebyshev_acceleration.a libplot_matrix.a libvec_ops.a -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

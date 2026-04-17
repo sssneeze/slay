@@ -1,0 +1,2 @@
+C:\msys64\ucrt64\bin\ar.exe qc libcsr_matrix.a CMakeFiles/csr_matrix.dir/src/matrix/csr_matrix.cpp.obj
+C:\msys64\ucrt64\bin\ranlib.exe libcsr_matrix.a

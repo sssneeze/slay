@@ -1,0 +1,2 @@
+C:\msys64\ucrt64\bin\ar.exe qc libsimple_iteration.a CMakeFiles/simple_iteration.dir/src/methods/simple_iteration.cpp.obj
+C:\msys64\ucrt64\bin\ranlib.exe libsimple_iteration.a

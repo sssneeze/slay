@@ -1,0 +1,2 @@
+C:\msys64\ucrt64\bin\ar.exe qc libchebyshev_acceleration.a CMakeFiles/chebyshev_acceleration.dir/src/methods/chebyshev_acceleration.cpp.obj
+C:\msys64\ucrt64\bin\ranlib.exe libchebyshev_acceleration.a

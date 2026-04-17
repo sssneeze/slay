@@ -1,0 +1,15 @@
+C:/Users/asave/slay/build/CMakeFiles/vec_ops.dir
+C:/Users/asave/slay/build/CMakeFiles/plot_matrix.dir
+C:/Users/asave/slay/build/CMakeFiles/csr_matrix.dir
+C:/Users/asave/slay/build/CMakeFiles/simple_iteration.dir
+C:/Users/asave/slay/build/CMakeFiles/jacobi.dir
+C:/Users/asave/slay/build/CMakeFiles/gauss_seidel.dir
+C:/Users/asave/slay/build/CMakeFiles/symmetric_gauss_seidel.dir
+C:/Users/asave/slay/build/CMakeFiles/chebyshev_acceleration.dir
+C:/Users/asave/slay/build/CMakeFiles/symmetric_chebyshev_acceleration.dir
+C:/Users/asave/slay/build/CMakeFiles/qr_decomposition.dir
+C:/Users/asave/slay/build/CMakeFiles/thomas_algorithm.dir
+C:/Users/asave/slay/build/CMakeFiles/symmetric_acceleration_test.dir
+C:/Users/asave/slay/build/CMakeFiles/ut_tests.dir
+C:/Users/asave/slay/build/CMakeFiles/edit_cache.dir
+C:/Users/asave/slay/build/CMakeFiles/rebuild_cache.dir

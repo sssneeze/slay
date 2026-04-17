@@ -1,0 +1,2 @@
+C:\msys64\ucrt64\bin\ar.exe qc libvec_ops.a CMakeFiles/vec_ops.dir/src/vector/operations_vector.cpp.obj
+C:\msys64\ucrt64\bin\ranlib.exe libvec_ops.a

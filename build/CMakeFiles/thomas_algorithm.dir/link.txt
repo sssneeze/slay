@@ -1,0 +1,2 @@
+C:\msys64\ucrt64\bin\ar.exe qc libthomas_algorithm.a CMakeFiles/thomas_algorithm.dir/src/methods/progonka.cpp.obj
+C:\msys64\ucrt64\bin\ranlib.exe libthomas_algorithm.a

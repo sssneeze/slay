@@ -1,0 +1,2 @@
+C:\msys64\ucrt64\bin\ar.exe qc libsymmetric_gauss_seidel.a CMakeFiles/symmetric_gauss_seidel.dir/src/methods/symmetric_gauss_seidel.cpp.obj
+C:\msys64\ucrt64\bin\ranlib.exe libsymmetric_gauss_seidel.a

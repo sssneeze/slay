@@ -45,3 +45,20 @@ target_link_libraries(qr_decomposition PUBLIC plot_matrix vec_ops)
 add_library(thomas_algorithm src/methods/progonka.cpp)
 target_include_directories(thomas_algorithm PUBLIC ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(thomas_algorithm PUBLIC vec_ops)
+
+# Новые методы (семинар 7)
+add_library(sor src/methods/sor.cpp)
+target_include_directories(sor PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(sor PUBLIC plot_matrix vec_ops)
+
+add_library(steepest_descent src/methods/steepest_descent.cpp)
+target_include_directories(steepest_descent PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(steepest_descent PUBLIC plot_matrix vec_ops)
+
+add_library(conjugate_gradient src/methods/conjugate_gradient.cpp)
+target_include_directories(conjugate_gradient PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(conjugate_gradient PUBLIC plot_matrix vec_ops)
+
+add_library(poisson_generator src/matrix/poisson_generator.cpp)
+target_include_directories(poisson_generator PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(poisson_generator PUBLIC plot_matrix)

@@ -1,0 +1,2 @@
+C:\msys64\ucrt64\bin\ar.exe qc libqr_decomposition.a CMakeFiles/qr_decomposition.dir/src/methods/householder_alg.cpp.obj
+C:\msys64\ucrt64\bin\ranlib.exe libqr_decomposition.a

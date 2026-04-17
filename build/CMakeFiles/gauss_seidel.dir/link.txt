@@ -1,0 +1,2 @@
+C:\msys64\ucrt64\bin\ar.exe qc libgauss_seidel.a CMakeFiles/gauss_seidel.dir/src/methods/gauss_seidel.cpp.obj
+C:\msys64\ucrt64\bin\ranlib.exe libgauss_seidel.a

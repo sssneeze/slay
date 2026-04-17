@@ -1,0 +1,2 @@
+C:\msys64\ucrt64\bin\ar.exe qc libplot_matrix.a CMakeFiles/plot_matrix.dir/src/matrix/plot_matrix.cpp.obj
+C:\msys64\ucrt64\bin\ranlib.exe libplot_matrix.a
