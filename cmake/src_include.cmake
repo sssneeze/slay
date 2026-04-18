@@ -46,7 +46,7 @@ add_library(thomas_algorithm src/methods/progonka.cpp)
 target_include_directories(thomas_algorithm PUBLIC ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(thomas_algorithm PUBLIC vec_ops)
 
-# Новые методы (семинар 7)
+# Новые методы
 add_library(sor src/methods/sor.cpp)
 target_include_directories(sor PUBLIC ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(sor PUBLIC plot_matrix vec_ops)
@@ -62,3 +62,8 @@ target_link_libraries(conjugate_gradient PUBLIC plot_matrix vec_ops)
 add_library(poisson_generator src/matrix/poisson_generator.cpp)
 target_include_directories(poisson_generator PUBLIC ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(poisson_generator PUBLIC plot_matrix)
+
+# GMRES 
+add_library(gmres src/methods/gmres.cpp)
+target_include_directories(gmres PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(gmres PUBLIC csr_matrix vec_ops)

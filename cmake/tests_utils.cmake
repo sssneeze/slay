@@ -20,9 +20,9 @@ target_link_libraries(symmetric_acceleration_test PRIVATE
     jacobi gauss_seidel symmetric_gauss_seidel
     symmetric_chebyshev_acceleration
     chebyshev_acceleration
-    sor steepest_descent conjugate_gradient
+    sor steepest_descent conjugate_gradient gmres
     poisson_generator
-    plot_matrix vec_ops
+    plot_matrix vec_ops csr_matrix
 )
 
 # Executable: ut_tests

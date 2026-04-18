@@ -15,6 +15,7 @@
 #include "methods/steepest_descent.hpp"
 #include "methods/conjugate_gradient.hpp"
 #include "matrix/poisson_generator.hpp"
+#include "methods/gmres.hpp"
 
 inline PlotMatrix create_poisson_matrix(size_t n) {
     PlotMatrix A(n, n);
@@ -247,5 +248,104 @@ inline int run_symmetric_acceleration_test() {
     }
     
     return 0;
+}
 
+//==========================================================================================================
+
+inline int run_gmres_comparison_test() {
+    const size_t NX = 15, NY = 15;
+    const double EPS = 1e-6;
+    const size_t MAX_ITER = 2000;
+    const double H = 1.0;
+    
+    std::cout << "Сравнение на матрице Пуассона (" << NX << "x" << NY << ")" << std::endl;
+    std::cout << "Точность: " << EPS << ", макс. итераций: " << MAX_ITER << std::endl << std::endl;
+    
+    std::vector<std::tuple<int, int, double>> dok;
+    for (size_t i = 0; i < NY; ++i) {
+        for (size_t j = 0; j < NX; ++j) {
+            size_t idx = Poisson::index(i, j, NX);
+            dok.emplace_back(static_cast<int>(idx), static_cast<int>(idx), 4.0 / (H * H));
+            if (j > 0) dok.emplace_back(static_cast<int>(idx), static_cast<int>(idx) - 1, -1.0 / (H * H));
+            if (j < NX - 1) dok.emplace_back(static_cast<int>(idx), static_cast<int>(idx) + 1, -1.0 / (H * H));
+            if (i > 0) dok.emplace_back(static_cast<int>(idx), static_cast<int>(idx) - NX, -1.0 / (H * H));
+            if (i < NY - 1) dok.emplace_back(static_cast<int>(idx), static_cast<int>(idx) + NX, -1.0 / (H * H));
+        }
+    }
+    CSRMatrix A(NX * NY, NX * NY, dok);
+    
+    std::vector<double> b = Poisson::generate_rhs(NX, NY, H);
+    std::vector<double> x0(NX * NY, 0.0);
+    
+    std::vector<Methods::IterativeResult> results;
+    
+    {
+        PlotMatrix A_dense(NX * NY, NX * NY);
+        for (size_t row = 0; row < NX * NY; ++row) {
+            for (int idx = A.get_rows()[row]; idx < A.get_rows()[row + 1]; ++idx) {
+                A_dense.set(row, A.get_cols()[idx], A.get_values()[idx]);
+            }
+        }
+        auto res = Methods::gauss_seidel(A_dense, b, x0, EPS, MAX_ITER);
+        res.method_name = "Gauss-Seidel";
+        results.push_back(res);
+    }
+    
+    {
+        PlotMatrix A_dense(NX * NY, NX * NY);
+        for (size_t row = 0; row < NX * NY; ++row) {
+            for (int idx = A.get_rows()[row]; idx < A.get_rows()[row + 1]; ++idx) {
+                A_dense.set(row, A.get_cols()[idx], A.get_values()[idx]);
+            }
+        }
+        auto res = Methods::conjugate_gradient(A_dense, b, x0, EPS, MAX_ITER);
+        res.method_name = "Conjugate Gradient";
+        results.push_back(res);
+    }
+    
+    {
+        auto res = Methods::gmres(A, b, x0, EPS, MAX_ITER, 30);
+        res.method_name = "GMRES(30)";
+        results.push_back(res);
+    }
+    
+    {
+        auto res = Methods::gmres(A, b, x0, EPS, MAX_ITER, 0);
+        res.method_name = "GMRES(no restart)";
+        results.push_back(res);
+    }
+    
+    std::cout << std::left << std::setw(25) << "Метод" 
+              << std::setw(12) << "Итерации" 
+              << std::setw(15) << "Время (мс)" 
+              << std::setw(18) << "Невязка" 
+              << "Сходимость" << std::endl;
+    std::cout << std::string(90, '-') << std::endl;
+    
+    for (const auto& res : results) {
+        std::cout << std::left << std::setw(25) << res.method_name
+                  << std::setw(12) << res.iterations
+                  << std::setw(15) << std::fixed << std::setprecision(2) << res.time_ms
+                  << std::setw(18) << std::scientific << std::setprecision(2) << res.residual
+                  << (res.converged ? "✓" : "✗") << std::endl;
+    }
+    
+    std::cout << "\nУскорение относительно Гаусс-Зейделя:" << std::endl;
+    if (!results.empty() && results[0].iterations > 0) {
+        double base_iter = results[0].iterations;
+        double base_time = results[0].time_ms;
+        
+        for (size_t i = 1; i < results.size(); ++i) {
+            if (results[i].iterations > 0 && results[i].time_ms > 0) {
+                double speedup_iter = base_iter / results[i].iterations;
+                double speedup_time = base_time / results[i].time_ms;
+                std::cout << "  " << results[i].method_name << ": "
+                          << std::fixed << std::setprecision(2)
+                          << speedup_iter << "x итер., "
+                          << speedup_time << "x время" << std::endl;
+            }
+        }
+    }
+    
+    return 0;
 }

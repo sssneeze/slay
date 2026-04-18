@@ -1,3 +1,4 @@
+// src/matrix/csr_matrix.cpp
 #include "matrix/csr_matrix.hpp"
 
 CSRMatrix::CSRMatrix(size_t m, size_t n, 
@@ -75,3 +76,8 @@ void CSRMatrix::print() const {
     for (int r : rows_) std::cout << r << " ";
     std::cout << std::endl;
 }
+
+
+const std::vector<double>& CSRMatrix::get_values() const { return values_; }
+const std::vector<int>& CSRMatrix::get_cols() const { return cols_; }
+const std::vector<int>& CSRMatrix::get_rows() const { return rows_; }
