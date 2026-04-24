@@ -1,0 +1,7 @@
+iteration,method,residual,time_ms
+24,Jacobi,5.65104e-07,0.906
+15,Gauss-Seidel,6.53337e-07,0.473
+12,Symmetric GS,5.65104e-07,0.4406
+13,Chebyshev + Jacobi,7.75303e-07,0.2949
+16,Chebyshev + GS,5.38304e-07,0.4452
+13,Chebyshev + SGS,3.54999e-07,0.5303

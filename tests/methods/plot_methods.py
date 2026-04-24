@@ -3,7 +3,7 @@ import csv
 import matplotlib.pyplot as plt
 
 
-with open('methods_results.csv', 'r') as f:
+with open("C:/Users/asave/slay/methods_results.csv", 'r') as f:
     reader = csv.DictReader(f)
     data = list(reader)
 

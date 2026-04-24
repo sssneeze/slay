@@ -1,0 +1,5 @@
+method,iterations,time_ms,residual,converged
+Simple Iteration,77,2.9837,8.92254e-07,true
+Jacobi,1138,107.011,9.97374e-07,true
+Gauss-Seidel,15,1.4145,4.78074e-07,true
+Chebyshev Acceleration,43,1.6343,8.26366e-07,true

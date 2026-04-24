@@ -78,6 +78,6 @@ void CSRMatrix::print() const {
 }
 
 
-const std::vector<double>& CSRMatrix::get_values() const { return values_; }
-const std::vector<int>& CSRMatrix::get_cols() const { return cols_; }
-const std::vector<int>& CSRMatrix::get_rows() const { return rows_; }
+// const std::vector<double>& CSRMatrix::get_values() const { return values_; }
+// const std::vector<int>& CSRMatrix::get_cols() const { return cols_; }
+// const std::vector<int>& CSRMatrix::get_rows() const { return rows_; }

@@ -6,7 +6,7 @@ import numpy as np
 from pathlib import Path
 
 
-def load_data(filename='symmetric_acceleration_results.csv'):
+def load_data(filename="C:/Users/asave/slay/symmetric_acceleration_results.csv"):
     methods = {}
     
     with open(filename, 'r', encoding='utf-8') as f:
@@ -70,7 +70,7 @@ def plot_convergence_by_time(methods, filename='symmetric_convergence_time.png')
 
 
 def main():
-    csv_file = 'symmetric_acceleration_results.csv'
+    csv_file = "C:/Users/asave/slay/symmetric_acceleration_results.csv"
     
 
     methods = load_data(csv_file)
